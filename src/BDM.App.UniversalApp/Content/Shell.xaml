@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="BDM.App.UniversalApp.Content.Shell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:BDM.App.UniversalApp.Content"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:notifications="using:BDM.App.UniversalApp.Controls.UINotifications"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="400">
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.DisplayMode"
+                                Value="CompactInline" />
+                        <Setter Target="RootSplitView.IsPaneOpen"
+                                Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="RootSplitView.DisplayMode"
+                                Value="CompactOverlay" />
+                        <Setter Target="RootSplitView.IsPaneOpen"
+                                Value="False" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <SplitView x:Name="RootSplitView"
+                   DisplayMode="Inline"
+                   OpenPaneLength="250"
+                   IsTabStop="False">
+            <SplitView.Pane>
+                <RelativePanel>
+                    <Button x:Name="HeaderButton"
+                            Click="OnHeaderClicked"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            RelativePanel.AlignRightWithPanel="True"
+                            Padding="6">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE700;"
+                                      FontFamily="Segoe MDL2 Assets"
+                                      Margin="4,0,16,0" />
+                            <TextBlock Text="Blagues de Merde" />
+                        </StackPanel>
+                    </Button>
+                    <ItemsControl x:Name="MenuItemsList"
+                                  ItemsSource="{x:Bind Path=MenuItems}"
+                                  RelativePanel.Below="HeaderButton"
+                                  RelativePanel.AlignLeftWithPanel="True"
+                                  RelativePanel.AlignRightWithPanel="True">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:NavigationMenuItem">
+                                <Button Click="OnMenuItemClicked"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Padding="6">
+                                    <RelativePanel>
+                                        <FontIcon x:Name="Icon"
+                                                  Glyph="{x:Bind Path=Icon}"
+                                                  FontFamily="Segoe MDL2 Assets"
+                                                  Margin="4,0,16,0" />
+                                        <TextBlock x:Name="Label"
+                                                   Text="{x:Bind Path=Label}"
+                                                   RelativePanel.RightOf="Icon" />
+                                    </RelativePanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </RelativePanel>
+            </SplitView.Pane>
+            <Frame x:Name="NavigationFrame" />
+        </SplitView>
+
+        <ItemsControl x:Name="ToastContainer">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <notifications:UINotificationUserControl />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

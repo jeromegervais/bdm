@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0"
+		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="UpdateManifest" AfterTargets="AfterCompile" Condition="Exists('Package.appxmanifest')">
+    <PropertyGroup>
+      <AppxBundle>Never</AppxBundle>
+      <AppxAutoIncrementPackageRevision>false</AppxAutoIncrementPackageRevision>
+      <Version Condition="'$(Version)'==''">1.0.0.0</Version>
+      <TargetPlatformIdentifier Condition="'$(TargetPlatformIdentifier)'==''">WindowsApp</TargetPlatformIdentifier>
+      <IdentityName>SotExperts.PlaceholderNameApp</IdentityName>
+      <AppDisplayName>Placeholder Name App</AppDisplayName>
+      <IdentityPublisher>CN=SoatExperts</IdentityPublisher>
+      <PublisherDisplayName>Soat</PublisherDisplayName>
+      <ProductGuid>00000000-0000-0000-0000-000000000000</ProductGuid>
+    </PropertyGroup>
+
+    <XmlPeek Namespaces="&lt;Namespace Prefix='store' Uri='http://schemas.datacontract.org/2004/07/Windows.Store.Catalog.Service'/&gt;"
+             Query="/store:ArrayOfProductReservedInfo/store:ProductReservedInfo/store:MainPackageIdentityName/text()"
+             XmlInputPath="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\ReservedInfo.xml"
+             Condition="'$(PackageProfile)'!=''">
+      <Output TaskParameter="Result" PropertyName="IdentityName"/>
+    </XmlPeek>
+    <XmlPeek Namespaces="&lt;Namespace Prefix='store' Uri='http://schemas.datacontract.org/2004/07/Windows.Store.Catalog.Service'/&gt;&lt;Namespace Prefix='a' Uri='http://schemas.microsoft.com/2003/10/Serialization/Arrays'/&gt;"
+             Query="/store:ArrayOfProductReservedInfo/store:ProductReservedInfo/store:ReservedNames/a:string/text()"
+             XmlInputPath="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\ReservedInfo.xml"
+             Condition="'$(PackageProfile)'!=''">
+      <Output TaskParameter="Result" PropertyName="AppDisplayName"/>
+    </XmlPeek>
+    <XmlPeek Namespaces="&lt;Namespace Prefix='store' Uri='http://schemas.datacontract.org/2004/07/Windows.Store.Catalog.Service'/&gt;"
+             Query="/store:ArrayOfProductReservedInfo/store:ProductReservedInfo/store:ProductGuid/text()"
+             XmlInputPath="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\ReservedInfo.xml"
+             Condition="'$(PackageProfile)'!=''">
+      <Output TaskParameter="Result" PropertyName="ProductGuid"/>
+    </XmlPeek>
+    <XmlPeek Namespaces="&lt;Namespace Prefix='store' Uri='http://schemas.datacontract.org/2004/07/Windows.Store.Catalog.Service'/&gt;"
+             Query="/store:DeveloperAccount/store:Publisher/text()"
+             XmlInputPath="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\Developer.xml"
+             Condition="'$(PackageProfile)'!=''">
+      <Output TaskParameter="Result" PropertyName="IdentityPublisher"/>
+    </XmlPeek>
+    <XmlPeek Namespaces="&lt;Namespace Prefix='store' Uri='http://schemas.datacontract.org/2004/07/Windows.Store.Catalog.Service'/&gt;"
+             Query="/store:DeveloperAccount/store:PublisherDisplayName/text()"
+             XmlInputPath="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\Developer.xml"
+             Condition="'$(PackageProfile)'!=''">
+      <Output TaskParameter="Result" PropertyName="PublisherDisplayName"/>
+    </XmlPeek>
+
+    <Message Importance="high" Text="Creating package $(AppDisplayName) ($(IdentityName)) as $(PublisherDisplayName) ($(IdentityPublisher))"/>
+
+    <Copy SourceFiles="Package.appxmanifest" DestinationFiles="$(IntermediateOutputPath)AppxManifest.xml" />
+    <XmlPoke Namespaces="&lt;Namespace Prefix='manifest' Uri='http://schemas.microsoft.com/appx/2010/manifest'/&gt;"
+						 Query="/manifest:Package/manifest:Identity/@Version"
+						 Value="$(Version)"
+						 XmlInputPath="$(IntermediateOutputPath)AppxManifest.xml"
+             Condition="'$(PackageProfile)'!=''"/>
+    <XmlPoke Namespaces="&lt;Namespace Prefix='manifest' Uri='http://schemas.microsoft.com/appx/2010/manifest'/&gt;"
+						 Query="/manifest:Package/manifest:Identity/@Name"
+						 Value="$(IdentityName)"
+						 XmlInputPath="$(IntermediateOutputPath)AppxManifest.xml"
+             Condition="'$(PackageProfile)'!=''"/>
+    <XmlPoke Namespaces="&lt;Namespace Prefix='manifest' Uri='http://schemas.microsoft.com/appx/2010/manifest'/&gt;"
+						 Query="/manifest:Package/manifest:Identity/@Publisher"
+						 Value="$(IdentityPublisher)"
+						 XmlInputPath="$(IntermediateOutputPath)AppxManifest.xml"
+             Condition="'$(PackageProfile)'!=''"/>
+    <XmlPoke Namespaces="&lt;Namespace Prefix='manifest' Uri='http://schemas.microsoft.com/appx/2010/manifest'/&gt;"
+						 Query="/manifest:Package/manifest:Properties/manifest:DisplayName"
+						 Value="$(AppDisplayName)"
+						 XmlInputPath="$(IntermediateOutputPath)AppxManifest.xml"
+             Condition="'$(PackageProfile)'!=''"/>
+    <XmlPoke Namespaces="&lt;Namespace Prefix='manifest' Uri='http://schemas.microsoft.com/appx/2010/manifest'/&gt;"
+						 Query="/manifest:Package/manifest:Properties/manifest:PublisherDisplayName"
+						 Value="$(PublisherDisplayName)"
+						 XmlInputPath="$(IntermediateOutputPath)AppxManifest.xml"
+             Condition="'$(PackageProfile)'!=''"/>
+    <XmlPoke Namespaces="&lt;Namespace Prefix='manifest' Uri='http://schemas.microsoft.com/appx/2010/manifest'/&gt;&lt;Namespace Prefix='mp' Uri='http://schemas.microsoft.com/appx/2014/phone/manifest'/&gt;"
+                 Query="/manifest:Package/mp:PhoneIdentity/@PhoneProductId"
+                 Value="$(ProductGuid)"
+                 XmlInputPath="$(IntermediateOutputPath)AppxManifest.xml"
+                 Condition="'$(PackageProfile)'!='' AND '$(TargetPlatformIdentifier)' == 'WindowsPhoneApp'"/>
+    
+    <Message Text="Certificate $(PackageCertificateKeyFile)" Importance="high"  />
+
+    <PropertyGroup>
+      <PackageCertificateKeyFile Condition="'$(PackageProfile)'!=''">$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\$(PackageProfile).pfx</PackageCertificateKeyFile>
+    </PropertyGroup>
+    
+    <Message Text="Certificate $(PackageCertificateKeyFile)" Importance="high"  />
+
+    <ItemGroup>
+      <AppxManifest Remove="Package.appxmanifest" />
+      <AppxManifest Include="$(IntermediateOutputPath)AppxManifest.xml" />
+    </ItemGroup>
+  </Target>
+  <Target Name="CreateSnkFile">
+    <PropertyGroup>
+      <IdentityPublisher Condition="'$(IdentityPublisher)' == ''">CN=SoatExperts</IdentityPublisher>
+    </PropertyGroup>
+
+    <Error Text="Please specify a valid PackageProfile" Condition="'$(PackageProfile)'==''" />
+
+    <XmlPeek Namespaces="&lt;Namespace Prefix='store' Uri='http://schemas.datacontract.org/2004/07/Windows.Store.Catalog.Service'/&gt;"
+         Query="/store:DeveloperAccount/store:Publisher/text()"
+         XmlInputPath="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\Developer.xml">
+      <Output TaskParameter="Result" PropertyName="IdentityPublisher"/>
+    </XmlPeek>
+
+    <Delete Files="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\$(PackageProfile).cer;
+$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\$(PackageProfile).pvk;
+$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)\$(PackageProfile).pfx"/>
+    <Exec Command="makecert -n &quot;$(IdentityPublisher)&quot; -pe -a sha256 -r -cy end -eku &quot;1.3.6.1.5.5.7.3.3&quot; -sv $(PackageProfile).pvk $(PackageProfile).cer
+      pvk2pfx -pvk $(PackageProfile).pvk -spc $(PackageProfile).cer -pfx $(PackageProfile).pfx"
+          WorkingDirectory="$(MSBuildThisFileDirectory)PackageProfiles\$(PackageProfile)" />
+  </Target>
+</Project>

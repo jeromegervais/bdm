@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0"
+		 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Target Name="UpdateAssemblyVersion" Returns="$(Version)">
+		<XmlPeek Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;"
+						 XmlInputPath="$(MSBuildThisFileDirectory)..\src\Version.proj" Query="/msb:Project/msb:PropertyGroup/msb:Major/text()">
+			<Output TaskParameter="Result" PropertyName="Major"/>
+		</XmlPeek>
+		<XmlPeek Namespaces="&lt;Namespace Prefix='msb' Uri='http://schemas.microsoft.com/developer/msbuild/2003'/&gt;"
+						 XmlInputPath="$(MSBuildThisFileDirectory)..\src\Version.proj" Query="/msb:Project/msb:PropertyGroup/msb:Minor/text()">
+			<Output TaskParameter="Result" PropertyName="Minor"/>
+		</XmlPeek>
+		<PropertyGroup>
+			<Major Condition="'$(Major)' == ''">0</Major>
+			<Minor Condition="'$(Minor)' == ''">0</Minor>
+			<BuildLabel Condition="'$(BuildLabel)' == ''">debug-$([System.DateTime]::Now.ToString('yyyy')).$([System.DateTime]::Now.ToString('MM')).$([System.DateTime]::Now.ToString('dd')).$([System.DateTime]::Now.ToString('Hmm'))</BuildLabel>
+			<Build>$(BuildLabel.Split('.')[1].TrimStart('0'))$(BuildLabel.Split('.')[2])</Build>
+			<Revision>$(BuildLabel.Split('.')[3])</Revision>
+			<Label>$(BuildLabel.Split('-')[0])</Label>
+			<Version>$(Major).$(Minor).$(Build).$(Revision)</Version>
+		</PropertyGroup>
+		<Message Importance="high" Text="Version is $(Version) $(Label)"/>
+		<ItemGroup>
+			<AssemblyAttributes Include="AssemblyVersion">
+				<_Parameter1>$(Major).$(Minor).0.0</_Parameter1>
+			</AssemblyAttributes>
+			<AssemblyAttributes Include="AssemblyFileVersion">
+				<_Parameter1>$(Version)</_Parameter1>
+			</AssemblyAttributes>
+			<AssemblyAttributes Include="AssemblyConfiguration">
+				<_Parameter1>$(Configuration)</_Parameter1>
+			</AssemblyAttributes>
+			<AssemblyAttributes Include="AssemblyInformationalVersion">
+				<_Parameter1>$(Version)-$(Label)</_Parameter1>
+			</AssemblyAttributes>
+		</ItemGroup>
+		<WriteCodeFragment Language="C#" AssemblyAttributes="@(AssemblyAttributes)" OutputDirectory="$(MSBuildThisFileDirectory)..\src\$(SolutionPath)" OutputFile="AssemblyInfo.Version.cs"/>
+	</Target>
+
+</Project>

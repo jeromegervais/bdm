@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0"
+				 DefaultTargets="Build"
+				 xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <NuGetPackagesDir>$(MSBuildThisFileDirectory)libs\</NuGetPackagesDir>
+    <OutDir Condition="'$(OutDir)' == ''">$(MSBuildThisFileDirectory)build\</OutDir>
+    <PackagesDir>$(OutDir)packages\</PackagesDir>
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+    <Solution>$(MSBuildThisFileDirectory)src\__Template__.sln</Solution>
+  </PropertyGroup>
+  <ItemGroup>
+    <Platforms Include="x86" Condition="'$(Platform)'=='' OR '$(Platform)'=='x86' OR '$(Platform)'=='None'"/>
+    <Platforms Include="x64" Condition="'$(Platform)'=='' OR '$(Platform)'=='x64' OR '$(Platform)'=='None'"/>
+    <Platforms Include="ARM" Condition="'$(Platform)'=='' OR '$(Platform)'=='ARM' OR '$(Platform)'=='None'"/>
+  </ItemGroup>
+
+  <Import Project="tools\Versioning.proj" />
+  <Import Project="tools\Packaging.proj" />
+
+  <Target Name="Init">
+    <MakeDir Directories="$(NuGetPackagesDir);$(OutDir);$(PackagesDir)"/>
+  </Target>
+
+  <Target Name="Clean">
+    <MSBuild Targets="Clean"
+						 Projects="$(Solution)"
+						 Properties="Configuration=$(Configuration)" />
+  </Target>
+
+  <Target Name="RestorePackages" DependsOnTargets="Init">
+    <Exec Command="&quot;$(MSBuildThisFileDirectory)tools\NuGet\NuGet.exe&quot; restore &quot;$(Solution)&quot; -NonInteractive -ConfigFile &quot;$(MSBuildThisFileDirectory)NuGet.config&quot;" />
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Init;RestorePackages">
+    <CallTarget Targets="UpdateAssemblyVersion">
+      <Output TaskParameter="TargetOutputs" PropertyName="Version"/>
+    </CallTarget>
+	<Message Text="Building $(Configuration) for platforms @(Platforms) Requested platform was $(Platform)" Importance="high" />
+    <ItemGroup>
+      <ProjectProperties Include="@(Platforms)">
+        <Value>
+          Configuration=$(Configuration);
+          Platform=%(Identity);
+          DeployOnBuild=True;
+          DeployTarget=Package;
+          PackageLocation=$(PackagesDir);
+          OutDir=$(OutDir)%(Identity)\;
+          GenerateProjectSpecificOutputFolder=True;
+          Version=$(Version);
+          AppxPackageDir=$(PackagesDir)
+        </Value>
+      </ProjectProperties>
+    </ItemGroup>
+    <Message Text="%(ProjectProperties.Value)"/>
+    <MSBuild Targets="Build"
+						 Projects="$(Solution)"
+             BuildInParallel="true"
+						 Properties="%(ProjectProperties.Value)" />
+  </Target>
+
+  <Target Name="Rebuild" DependsOnTargets="Init;RestorePackages">
+    <CallTarget Targets="UpdateAssemblyVersion">
+      <Output TaskParameter="TargetOutputs" PropertyName="Version"/>
+    </CallTarget>
+    <ItemGroup>
+      <ProjectProperties Include="@(Platforms)">
+        <Value>
+          Configuration=$(Configuration);
+          Platform=%(Identity);
+          DeployOnBuild=True;
+          DeployTarget=Package;
+          PackageLocation=$(PackagesDir);
+          OutDir=$(OutDir)%(Identity)\;
+          GenerateProjectSpecificOutputFolder=True;
+          Version=$(Version);
+          AppxPackageDir=$(PackagesDir)
+        </Value>
+      </ProjectProperties>
+    </ItemGroup>
+    <MSBuild Targets="Rebuild"
+						 Projects="$(Solution)"
+             BuildInParallel="true"
+						 Properties="%(ProjectProperties.Value)" />
+  </Target>
+</Project>
