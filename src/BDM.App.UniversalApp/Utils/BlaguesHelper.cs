@@ -14,6 +14,8 @@ namespace BDM.App.UniversalApp.Utils
 
         private Dictionary<Order, List<Blague>> _blagues;
 
+        private List<Category> _categories;
+
         public BlaguesHelper(IBlaguesService blaguesService)
         {
             _blaguesService = blaguesService;
@@ -30,6 +32,15 @@ namespace BDM.App.UniversalApp.Utils
         {
             List<Blague> list;
             return _blagues.TryGetValue(order, out list) ? list : new List<Blague>();
+        }
+
+        public async Task<List<Category>> GetCategories()
+        {
+            if (_categories == null || !_categories.Any())
+            {
+                _categories = await _blaguesService.GetCategories();
+            }
+            return _categories;
         }
     }
 }

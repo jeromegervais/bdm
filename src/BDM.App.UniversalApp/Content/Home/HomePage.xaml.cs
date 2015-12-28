@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Windows.UI.Xaml.Navigation;
-using BDM.App.UniversalApp.Content.Home;
 using BDM.App.UniversalApp.Mvvm.ViewModel;
 using BDM.App.UniversalApp.Utils;
 using Windows.UI.Xaml.Controls;

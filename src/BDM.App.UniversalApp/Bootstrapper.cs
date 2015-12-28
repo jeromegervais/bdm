@@ -6,6 +6,7 @@ using BDM.App.Shared;
 using BDM.Data.Client.Contracts;
 using BDM.Data.Client.Net.WebServices;
 using BDM.App.UniversalApp.Utils;
+using BDM.App.UniversalApp.Content.Categories;
 
 namespace BDM.App.UniversalApp
 {
@@ -15,10 +16,7 @@ namespace BDM.App.UniversalApp
         {
 
             builder.RegisterType<Shell>().SingleInstance();
-
-            builder.RegisterType<HomeViewModel>();
-            builder.RegisterType<ShellViewModel>();
-
+            
             #region Utils
 
             builder.RegisterType<AccessIsolatedStorage>().As<IAccessIsolatedStorage>().SingleInstance();
@@ -31,8 +29,9 @@ namespace BDM.App.UniversalApp
 
             #region ViewModels
 
+            builder.RegisterType<ShellViewModel>();
             builder.RegisterType<HomeViewModel>().SingleInstance();
-            builder.RegisterType<ShellViewModel>().SingleInstance();
+            builder.RegisterType<CategoriesViewModel>().SingleInstance();
 
             #endregion
         }

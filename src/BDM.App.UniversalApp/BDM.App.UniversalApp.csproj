@@ -106,9 +106,10 @@
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\Home\HomeViewModel.cs" />
-    <Compile Include="Content\Live\LivePage.xaml.cs">
-      <DependentUpon>LivePage.xaml</DependentUpon>
+    <Compile Include="Content\Live\Categories.xaml.cs">
+      <DependentUpon>Categories.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\Live\CategoriesViewModel.cs" />
     <Compile Include="Content\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -169,7 +170,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Content\Live\LivePage.xaml">
+    <Page Include="Content\Live\Categories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

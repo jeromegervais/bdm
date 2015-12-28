@@ -8,14 +8,13 @@ using Windows.UI.Xaml;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using BDM.App.UniversalApp.Content.Home;
-using BDM.App.UniversalApp.Content.Live;
-using BDM.App.UniversalApp.Content.Videos;
 using BDM.App.UniversalApp.Mvvm.ViewModel;
 using BDM.App.UniversalApp.Utils;
 using BDM.App.UniversalApp.Utils.UINotifications;
 using BDM.App.UniversalApp.Mvvm.Messaging;
 using BDM.App.UniversalApp.Utils.Navigation;
 using BDM.Common.Model;
+using BDM.App.UniversalApp.Content.Categories;
 
 namespace BDM.App.UniversalApp.Content
 {
@@ -44,8 +43,9 @@ namespace BDM.App.UniversalApp.Content
 			{
 				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Dernières", Order = Order.Last, Icon = '\xE10F'},
 				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Aléatoires", Order = Order.Random, Icon = '\xE8B1'},
-				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Meilleures", Order = Order.TopWeek, Icon = '\xE8E1'}
-			};
+				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Meilleures", Order = Order.TopWeek, Icon = '\xE8E1'},
+                new NavigationMenuItem {Destination = typeof (CategoriesPage), Label = "Catégories", Icon = '\xE8E1'}
+            };
 
             Messenger.Current.Subscribe<UINotificationMessage>(OnSendNotificationMessage);
         }
