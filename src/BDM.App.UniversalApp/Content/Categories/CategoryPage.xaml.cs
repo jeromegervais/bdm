@@ -7,17 +7,22 @@ using Windows.UI.Xaml.Controls;
 using BDM.Common.Model;
 using Windows.UI.Xaml;
 
-namespace BDM.App.UniversalApp.Content.Home
+// Pour plus d'informations sur le modèle d'élément Page vierge, voir la page http://go.microsoft.com/fwlink/?LinkId=234238
+
+namespace BDM.App.UniversalApp.Content.Categories
 {
-    public sealed partial class HomePage : IPage<HomeViewModel>
+    /// <summary>
+    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
+    /// </summary>
+    public sealed partial class CategoryPage : IPage<CategoryPageViewModel>
     {
-        public HomeViewModel ViewModel
+        public CategoryPageViewModel ViewModel
         {
-            get { return DataContext as HomeViewModel; }
+            get { return DataContext as CategoryPageViewModel; }
             set { DataContext = value; }
         }
 
-        public HomePage()
+        public CategoryPage()
         {
             InitializeComponent();
             this.InjectViewModel();
@@ -38,22 +43,6 @@ namespace BDM.App.UniversalApp.Content.Home
             await ViewModel.OnNavigatedFrom(e);
         }
 
-        private async void Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            await ViewModel.ReloadBlagues();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            var cmdParam = button.CommandParameter.ToString();
-            Order? order = Enum.GetValues(typeof(Order)).Cast<Order>().FirstOrDefault(o => o.ToString() == cmdParam);
-            if (order.HasValue)
-            {
-                ViewModel.SetFromOrder(order.Value);
-            }
-        }
-
         private void Vote_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
@@ -67,6 +56,11 @@ namespace BDM.App.UniversalApp.Content.Home
             Button button = (Button)sender;
             ViewModel.SetSharingObject(button.DataContext as Blague);
             Windows.ApplicationModel.DataTransfer.DataTransferManager.ShowShareUI();
+        }
+
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.ReloadBlagues();
         }
     }
 }

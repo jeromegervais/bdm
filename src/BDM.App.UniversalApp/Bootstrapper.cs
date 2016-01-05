@@ -31,6 +31,7 @@ namespace BDM.App.UniversalApp
 
             builder.RegisterType<ShellViewModel>();
             builder.RegisterType<HomeViewModel>().SingleInstance();
+            builder.RegisterType<CategoryPageViewModel>().SingleInstance();
             builder.RegisterType<CategoriesViewModel>().SingleInstance();
 
             #endregion

@@ -8,6 +8,68 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="400">
+    <UserControl.Resources>
+        
+        
+        <Style x:Key="MenuItemButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="Transparent">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointedOver" />
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="ButtonBackground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BDM_Light_Blue}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentContainer">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Black"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimation Duration="0"
+                                                             To="0.98"
+                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)"
+                                                             Storyboard.TargetName="ContentContainer"/>
+                                            <DoubleAnimation Duration="0"
+                                                             To="0.98"
+                                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)"
+                                                             Storyboard.TargetName="ContentContainer"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="ButtonBackground"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="0"
+                                    Margin="0">
+                                <ContentPresenter x:Name="ContentContainer"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                Content="{TemplateBinding Content}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Background="{TemplateBinding Background}"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                Padding="{TemplateBinding Padding}"
+                                                Margin="0"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                                RenderTransformOrigin="0.5,0.5">
+
+                                    <ContentPresenter.RenderTransform>
+                                        <CompositeTransform />
+                                    </ContentPresenter.RenderTransform>
+                                </ContentPresenter>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -41,13 +103,15 @@
                    OpenPaneLength="250"
                    IsTabStop="False">
             <SplitView.Pane>
-                <RelativePanel>
+                <RelativePanel Background="White">
                     <Button x:Name="HeaderButton"
                             Click="OnHeaderClicked"
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left"
                             RelativePanel.AlignLeftWithPanel="True"
                             RelativePanel.AlignRightWithPanel="True"
+                            Background="{StaticResource BDM_Blue}"
+                            Foreground="White"
                             Padding="6">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xE700;"
@@ -60,22 +124,28 @@
                                   ItemsSource="{x:Bind Path=MenuItems}"
                                   RelativePanel.Below="HeaderButton"
                                   RelativePanel.AlignLeftWithPanel="True"
-                                  RelativePanel.AlignRightWithPanel="True">
+                                  RelativePanel.AlignRightWithPanel="True"
+                                  Background="{StaticResource BDM_Blue}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate x:DataType="local:NavigationMenuItem">
                                 <Button Click="OnMenuItemClicked"
+                                        Style="{StaticResource MenuItemButtonStyle}"
                                         HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Left"
+                                        Foreground="White"
+                                        Background="{StaticResource BDM_Blue}"
                                         Padding="6">
-                                    <RelativePanel>
-                                        <FontIcon x:Name="Icon"
+                                    <Button.Content>
+                                        <RelativePanel>
+                                            <FontIcon x:Name="Icon"
                                                   Glyph="{x:Bind Path=Icon}"
                                                   FontFamily="Segoe MDL2 Assets"
                                                   Margin="4,0,16,0" />
-                                        <TextBlock x:Name="Label"
+                                            <TextBlock x:Name="Label"
                                                    Text="{x:Bind Path=Label}"
                                                    RelativePanel.RightOf="Icon" />
-                                    </RelativePanel>
+                                        </RelativePanel>
+                                    </Button.Content>
                                 </Button>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

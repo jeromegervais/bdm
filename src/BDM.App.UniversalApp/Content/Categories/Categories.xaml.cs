@@ -1,4 +1,5 @@
-﻿using BDM.App.UniversalApp.Mvvm.ViewModel;
+﻿using BDM.App.UniversalApp.Content.Home;
+using BDM.App.UniversalApp.Mvvm.ViewModel;
 using BDM.App.UniversalApp.Utils;
 using BDM.Common.Model;
 using Windows.UI.Xaml.Controls;
@@ -9,9 +10,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace BDM.App.UniversalApp.Content.Categories
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class CategoriesPage : IPage<CategoriesViewModel>
     {
         public CategoriesViewModel ViewModel
@@ -33,10 +31,10 @@ namespace BDM.App.UniversalApp.Content.Categories
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Category category = (sender as Grid)?.DataContext as Category;
+            Category category = (sender as Border)?.DataContext as Category;
             if (category != null)
             {
-
+                App.Current.GetShell().Navigate(typeof(CategoryPage), category);
             }
         }
     }

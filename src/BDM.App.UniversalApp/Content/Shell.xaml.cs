@@ -44,7 +44,7 @@ namespace BDM.App.UniversalApp.Content
 				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Dernières", Order = Order.Last, Icon = '\xE10F'},
 				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Aléatoires", Order = Order.Random, Icon = '\xE8B1'},
 				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Meilleures", Order = Order.TopWeek, Icon = '\xE8E1'},
-                new NavigationMenuItem {Destination = typeof (CategoriesPage), Label = "Catégories", Icon = '\xE8E1'}
+                new NavigationMenuItem {Destination = typeof (CategoriesPage), Label = "Catégories", Icon = '\xEA37'}
             };
 
             Messenger.Current.Subscribe<UINotificationMessage>(OnSendNotificationMessage);
@@ -52,7 +52,7 @@ namespace BDM.App.UniversalApp.Content
 
 		public void OnLaunched(LaunchActivatedEventArgs launchActivatedEventArgs)
 		{
-			NavigationFrame.Navigate(typeof(HomePage));
+			Navigate(typeof(HomePage));
 		}
 
 		public void OnSuspending(SuspendingEventArgs suspendingEventArgs)

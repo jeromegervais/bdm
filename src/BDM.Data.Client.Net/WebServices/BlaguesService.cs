@@ -13,6 +13,8 @@ namespace BDM.Data.Client.Net.WebServices
         private readonly RestClient _client;
         private const string _baseUrl = "http://ws.blaguesdemerde.fr/v1";
 
+        private const string _baseVoteUrl = "http://webservices.blaguesdemerde.fr/windows10/";
+
         public BlaguesService(IAccessIsolatedStorage isolatedStorage)
         {
             _client = new RestClient(isolatedStorage);
@@ -21,7 +23,7 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<Dictionary<Order, List<Blague>>> GetBlagues()
         {
             var request = new GetBlaguesRequest();
-            var resp = await _client.SendDataAsync<GetBlaguesRequest, GetBlaguesResponse>(_baseUrl, request.Command, request, RestClient.DefaultCacheLifetime, CachePolicy.CanUseOldValues);
+            var resp = await _client.SendDataAsync<GetBlaguesRequest, GetBlaguesResponse>(_baseUrl, request.Command, request, RestClient.NoCache, CachePolicy.CanUseOldValues);
 
             var dicoBlagues = new Dictionary<Order, List<Blague>>();
 
@@ -51,7 +53,7 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<Dictionary<Order, List<Blague>>> GetBlaguesForCategory(int categoryId)
         {
             var request = new GetBlaguesForCategoryRequest(categoryId);
-            var resp = await _client.SendDataAsync<GetBlaguesForCategoryRequest, GetBlaguesForCategoryResponse>(_baseUrl, request.Command, request, RestClient.DefaultCacheLifetime, CachePolicy.CanUseOldValues);
+            var resp = await _client.SendDataAsync<GetBlaguesForCategoryRequest, GetBlaguesForCategoryResponse>(_baseUrl, request.Command, request, RestClient.NoCache, CachePolicy.CanUseOldValues);
 
             var dicoBlagues = new Dictionary<Order, List<Blague>>();
 
@@ -66,12 +68,11 @@ namespace BDM.Data.Client.Net.WebServices
             return dicoBlagues;
         }
 
-        public async Task<int> Vote(int blagueId, bool like)
+        public async Task<bool> Vote(int blagueId, bool like)
         {
             var request = new VoteRequest(blagueId, like);
-            var resp = await _client.SendDataAsync<VoteRequest, VoteResponse>(_baseUrl, request.Command, request, RestClient.DefaultCacheLifetime, CachePolicy.CanUseOldValues);
-
-            return 0;
+            await _client.SendDataAsync<VoteRequest, VoteResponse>(_baseVoteUrl, request.Command, request, RestClient.DefaultCacheLifetime);
+            return true;
         }
     }
 }

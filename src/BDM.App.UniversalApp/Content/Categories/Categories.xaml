@@ -19,6 +19,7 @@
                     <Border DataContext="{Binding}"
 				          Margin="12,10,12,0"
 						  Width="400"
+                          Background="{StaticResource BDM_Blue}"
                           Tapped="Grid_Tapped">
                         <TextBlock Text="{Binding Name}"
                                    Padding="8"

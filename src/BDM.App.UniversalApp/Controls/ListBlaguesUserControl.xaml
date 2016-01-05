@@ -1,0 +1,93 @@
+﻿<UserControl
+    x:Class="BDM.App.UniversalApp.Controls.ListBlaguesUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BDM.App.UniversalApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <ListView ItemsSource="{Binding Blagues}"
+                  HorizontalContentAlignment="Stretch">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <Grid Margin="18">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Border Background="White"
+                                Padding="18"
+                                Grid.Row="0">
+                        <TextBlock Text="{Binding Text}"
+                                       TextWrapping="WrapWholeWords"
+                                       HorizontalAlignment="Stretch"/>
+                    </Border>
+                    <Grid Grid.Row="1"
+                              Background="{StaticResource BDM_Blue}"
+                              Padding="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource ButtonNoStyle}"
+                                    Grid.Column="0"
+                                    Click="Vote_Click"
+                                    DataContext="{Binding}"
+                                    CommandParameter="Like"
+                                    HorizontalAlignment="Stretch">
+                            <RelativePanel HorizontalAlignment="Center">
+                                <FontIcon x:Name="IconGoods"
+                                              Glyph="&#xE8E1;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              Foreground="White"
+                                              Margin="4,0,16,0" />
+                                <TextBlock Text="{Binding NbGoods}"
+                                               Foreground="White"
+                                               RelativePanel.RightOf="IconGoods" />
+                            </RelativePanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ButtonNoStyle}"
+                                    Grid.Column="1"
+                                    Click="Vote_Click"
+                                    DataContext="{Binding}"
+                                    CommandParameter="Dislike"
+                                    HorizontalAlignment="Stretch">
+                            <RelativePanel HorizontalAlignment="Center">
+                                <FontIcon x:Name="IconBads"
+                                              Glyph="&#xE8E0;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              Foreground="White"
+                                              Margin="4,0,16,0" />
+                                <TextBlock Text="{Binding NbBads}"
+                                               Foreground="White"
+                                               RelativePanel.RightOf="IconBads" />
+                            </RelativePanel>
+                        </Button>
+
+                        <Button Style="{StaticResource ButtonNoStyle}"
+                                    Grid.Column="2"
+                                    Click="Share_Click"
+                                    DataContext="{Binding}"
+                                    CommandParameter="Dislike"
+                                    HorizontalAlignment="Stretch">
+                            <RelativePanel Grid.Column="2"
+                                               HorizontalAlignment="Center">
+                                <FontIcon x:Name="IconShare"
+                                              Glyph="&#xE72D;"
+                                              FontFamily="Segoe MDL2 Assets"
+                                              Foreground="White"
+                                              Margin="4,0,16,0" />
+                            </RelativePanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</UserControl>

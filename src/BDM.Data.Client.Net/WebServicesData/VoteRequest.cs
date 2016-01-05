@@ -21,7 +21,7 @@ namespace BDM.Data.Client.Net.WebServicesData
 
         public override string Command
         {
-            get { return string.Format("{0}/put/{1}", _like ? "good" : "bad", _blagueId); }
+            get { return string.Format("{0}/{1}", _like ? "like" : "dislike", _blagueId); }
         }
 
         public override IEnumerable<KeyValuePair<string, string>> Parameters

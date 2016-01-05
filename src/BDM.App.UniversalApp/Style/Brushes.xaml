@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BDM.App.UniversalApp.Style">
+    <Color x:Key="BDM_Color_Light_Blue">#CFE7FF</Color>
+    <Color x:Key="BDM_Color_Blue">#3399FF</Color>
+
+    <SolidColorBrush x:Key="BDM_Light_Blue" Color="{StaticResource BDM_Color_Light_Blue}"/>
+    <SolidColorBrush x:Key="BDM_Blue" Color="{StaticResource BDM_Color_Blue}"/>
+</ResourceDictionary>

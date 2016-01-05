@@ -14,16 +14,24 @@ namespace BDM.App.UniversalApp.Utils
 
         private Dictionary<Order, List<Blague>> _blagues;
 
+        private Dictionary<int, Dictionary<Order, List<Blague>>> _blaguesByCategory;
+
+        private List<int> _votedBlagues;
+
         private List<Category> _categories;
 
         public BlaguesHelper(IBlaguesService blaguesService)
         {
             _blaguesService = blaguesService;
+
+            _blaguesByCategory = new Dictionary<int, Dictionary<Order, List<Blague>>>();
+            _votedBlagues = new List<int>();
         }
 
         public async Task LoadBlagues()
         {
             _blagues = await _blaguesService.GetBlagues();
+            _blaguesByCategory.Clear();
         }
 
         public bool HasBeenLoaded => _blagues != null;
@@ -41,6 +49,27 @@ namespace BDM.App.UniversalApp.Utils
                 _categories = await _blaguesService.GetCategories();
             }
             return _categories;
+        }
+
+        public async Task<Dictionary<Order, List<Blague>>> GetBlaguesForCategory(int categoryId)
+        {
+            Dictionary<Order, List<Blague>> result;
+            if (!_blaguesByCategory.TryGetValue(categoryId, out result))
+            {
+                result = _blaguesByCategory[categoryId] = await _blaguesService.GetBlaguesForCategory(categoryId);
+            }
+            return result;
+        }
+
+        public async Task<bool> Vote(int blagueId, bool like)
+        {
+            if (!_votedBlagues.Contains(blagueId))
+            {
+                _votedBlagues.Add(blagueId);
+                await _blaguesService.Vote(blagueId, like);
+                return true;
+            }
+            return false;
         }
     }
 }

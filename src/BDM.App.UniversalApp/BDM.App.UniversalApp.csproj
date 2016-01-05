@@ -102,20 +102,28 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Content\BlaguesViewModel.cs" />
+    <Compile Include="Content\Categories\CategoryPage.xaml.cs">
+      <DependentUpon>CategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Categories\CategoryPageViewModel.cs" />
     <Compile Include="Content\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\Home\HomeViewModel.cs" />
-    <Compile Include="Content\Live\Categories.xaml.cs">
+    <Compile Include="Content\Categories\Categories.xaml.cs">
       <DependentUpon>Categories.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Content\Live\CategoriesViewModel.cs" />
+    <Compile Include="Content\Categories\CategoriesViewModel.cs" />
     <Compile Include="Content\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\ShellViewModel.cs" />
     <Compile Include="Content\Videos\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListBlaguesUserControl.xaml.cs">
+      <DependentUpon>ListBlaguesUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\UINotifications\UINotificationUserControl.xaml.cs">
       <DependentUpon>UINotificationUserControl.xaml</DependentUpon>
@@ -142,6 +150,7 @@
     <Compile Include="Utils\Navigation\GlobalNavigationArgs.cs" />
     <Compile Include="Utils\Navigation\NavigationMemoryHelper.cs" />
     <Compile Include="Utils\Navigation\SuspensionManager.cs" />
+    <Compile Include="Utils\SharingObject.cs" />
     <Compile Include="Utils\UINotifications\IUINotificationService.cs" />
     <Compile Include="Utils\UINotifications\UINotificationMessage.cs" />
     <Compile Include="Utils\VisualTreeHelper.cs" />
@@ -166,11 +175,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Content\Categories\CategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Content\Home\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Content\Live\Categories.xaml">
+    <Page Include="Content\Categories\Categories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,11 +195,20 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ListBlaguesUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\UINotifications\UINotificationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Converters\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Style\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -228,4 +250,5 @@
   </Target>
   -->
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .gitignore))\tools\Common.AfterBuild.proj" Condition="Exists('$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), .gitignore))\tools\Common.AfterBuild.proj')" />
+  <Import Project="$(XamlSpyInstallPath)MSBuild\FirstFloor.XamlSpy.WinRT.targets" Condition="'$(XamlSpyInstallPath)' != '' and '$(Configuration)' == 'DEBUG'" />
 </Project>

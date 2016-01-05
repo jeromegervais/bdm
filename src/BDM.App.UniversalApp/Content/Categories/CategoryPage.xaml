@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="BDM.App.UniversalApp.Content.Categories.CategoryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BDM.App.UniversalApp.Content.Categories"
+    xmlns:controls="using:BDM.App.UniversalApp.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="categoryPage">
+
+    <Grid Background="{StaticResource BDM_Light_Blue}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Margin="16,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{Binding CategoryName}"
+                       FontSize="24"
+                       TextWrapping="WrapWholeWords"
+                       HorizontalAlignment="Stretch"/>
+            <Button Grid.Column="1"
+                    Style="{StaticResource ButtonNoStyle}"
+                    HorizontalAlignment="Right"
+                    Margin="24,0"
+                    Click="Refresh_Click">
+                <FontIcon x:Name="Icon"
+                            Glyph="&#xE72C;"
+                            FontFamily="Segoe MDL2 Assets"/>
+            </Button>
+        </Grid>
+
+        <controls:ListBlaguesUserControl x:Name="BlaguesControl"
+                                         Grid.Row="1"
+                                         ShareClick="Share_Click"
+                                         VoteClick="Vote_Click"/>
+
+    </Grid>
+</Page>
