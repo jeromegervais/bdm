@@ -119,9 +119,10 @@
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\ShellViewModel.cs" />
-    <Compile Include="Content\Videos\VideosPage.xaml.cs">
-      <DependentUpon>VideosPage.xaml</DependentUpon>
+    <Compile Include="Content\Submit\SubmitPage.xaml.cs">
+      <DependentUpon>SubmitPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Content\Submit\SubmitViewModel.cs" />
     <Compile Include="Controls\ListBlaguesUserControl.xaml.cs">
       <DependentUpon>ListBlaguesUserControl.xaml</DependentUpon>
     </Compile>
@@ -191,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Content\Videos\VideosPage.xaml">
+    <Page Include="Content\Submit\SubmitPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

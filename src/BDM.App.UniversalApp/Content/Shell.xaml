@@ -140,7 +140,7 @@
                                             <FontIcon x:Name="Icon"
                                                   Glyph="{x:Bind Path=Icon}"
                                                   FontFamily="Segoe MDL2 Assets"
-                                                  Margin="4,0,16,0" />
+                                                  Margin="6,0,16,0" />
                                             <TextBlock x:Name="Label"
                                                    Text="{x:Bind Path=Label}"
                                                    RelativePanel.RightOf="Icon" />

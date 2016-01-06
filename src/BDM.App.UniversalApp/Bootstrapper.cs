@@ -7,6 +7,7 @@ using BDM.Data.Client.Contracts;
 using BDM.Data.Client.Net.WebServices;
 using BDM.App.UniversalApp.Utils;
 using BDM.App.UniversalApp.Content.Categories;
+using BDM.App.UniversalApp.Content.Submit;
 
 namespace BDM.App.UniversalApp
 {
@@ -33,6 +34,7 @@ namespace BDM.App.UniversalApp
             builder.RegisterType<HomeViewModel>().SingleInstance();
             builder.RegisterType<CategoryPageViewModel>().SingleInstance();
             builder.RegisterType<CategoriesViewModel>().SingleInstance();
+            builder.RegisterType<SubmitViewModel>().SingleInstance();
 
             #endregion
         }
