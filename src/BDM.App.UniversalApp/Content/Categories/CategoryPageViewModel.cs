@@ -1,5 +1,6 @@
 ﻿using BDM.App.UniversalApp.Utils;
 using BDM.App.UniversalApp.Utils.Navigation;
+using BDM.App.UniversalApp.ViewModels;
 using BDM.Common.Model;
 using System;
 using System.Collections.Generic;
@@ -39,10 +40,10 @@ namespace BDM.App.UniversalApp.Content.Categories
 
             foreach (Order order in new[] { Order.Random, Order.TopMonth, Order.TopYear })
             {
-                List<Blague> list;
+                List<BlagueVM> list;
                 if (blagues.TryGetValue(order, out list) && list.Any())
                 {
-                    foreach (Blague blague in list)
+                    foreach (BlagueVM blague in list)
                     {
                         Blagues.Add(blague);
                     }

@@ -155,6 +155,7 @@
     <Compile Include="Utils\UINotifications\IUINotificationService.cs" />
     <Compile Include="Utils\UINotifications\UINotificationMessage.cs" />
     <Compile Include="Utils\VisualTreeHelper.cs" />
+    <Compile Include="ViewModels\BlagueVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

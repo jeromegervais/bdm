@@ -1,4 +1,5 @@
-﻿using BDM.Common.Model;
+﻿using BDM.App.UniversalApp.ViewModels;
+using BDM.Common.Model;
 using BDM.Data.Client.Contracts;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace BDM.App.UniversalApp.Utils
     {
         private IBlaguesService _blaguesService;
 
-        private Dictionary<Order, List<Blague>> _blagues;
+        private Dictionary<Order, List<BlagueVM>> _blagues;
 
-        private Dictionary<int, Dictionary<Order, List<Blague>>> _blaguesByCategory;
+        private Dictionary<int, Dictionary<Order, List<BlagueVM>>> _blaguesByCategory;
 
         private List<int> _votedBlagues;
 
@@ -24,22 +25,22 @@ namespace BDM.App.UniversalApp.Utils
         {
             _blaguesService = blaguesService;
 
-            _blaguesByCategory = new Dictionary<int, Dictionary<Order, List<Blague>>>();
+            _blaguesByCategory = new Dictionary<int, Dictionary<Order, List<BlagueVM>>>();
             _votedBlagues = new List<int>();
         }
 
         public async Task LoadBlagues()
         {
-            _blagues = await _blaguesService.GetBlagues();
+            _blagues = CastToVM(await _blaguesService.GetBlagues());
             _blaguesByCategory.Clear();
         }
 
         public bool HasBeenLoaded => _blagues != null;
 
-        public List<Blague> GetBlagues(Order order)
+        public List<BlagueVM> GetBlagues(Order order)
         {
-            List<Blague> list;
-            return _blagues.TryGetValue(order, out list) ? list : new List<Blague>();
+            List<BlagueVM> list;
+            return _blagues.TryGetValue(order, out list) ? list : new List<BlagueVM>();
         }
 
         public async Task<List<Category>> GetCategories()
@@ -51,12 +52,12 @@ namespace BDM.App.UniversalApp.Utils
             return _categories;
         }
 
-        public async Task<Dictionary<Order, List<Blague>>> GetBlaguesForCategory(int categoryId)
+        public async Task<Dictionary<Order, List<BlagueVM>>> GetBlaguesForCategory(int categoryId)
         {
-            Dictionary<Order, List<Blague>> result;
+            Dictionary<Order, List<BlagueVM>> result;
             if (!_blaguesByCategory.TryGetValue(categoryId, out result))
             {
-                result = _blaguesByCategory[categoryId] = await _blaguesService.GetBlaguesForCategory(categoryId);
+                result = _blaguesByCategory[categoryId] = CastToVM(await _blaguesService.GetBlaguesForCategory(categoryId));
             }
             return result;
         }
@@ -70,6 +71,11 @@ namespace BDM.App.UniversalApp.Utils
                 return true;
             }
             return false;
+        }
+
+        public Dictionary<Order, List<BlagueVM>> CastToVM(Dictionary<Order, List<Blague>> dico)
+        {
+            return dico.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Select(b => new BlagueVM(b)).ToList());
         }
     }
 }

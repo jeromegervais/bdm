@@ -6,6 +6,7 @@ using BDM.App.UniversalApp.Utils;
 using Windows.UI.Xaml.Controls;
 using BDM.Common.Model;
 using Windows.UI.Xaml;
+using BDM.App.UniversalApp.ViewModels;
 
 namespace BDM.App.UniversalApp.Content.Home
 {
@@ -59,13 +60,13 @@ namespace BDM.App.UniversalApp.Content.Home
             Button button = (Button)sender;
             var cmdParam = button.CommandParameter.ToString();
 
-            ViewModel.Vote(button.DataContext as Blague, cmdParam == "Like");
+            ViewModel.Vote(button.DataContext as BlagueVM, cmdParam == "Like");
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            ViewModel.SetSharingObject(button.DataContext as Blague);
+            ViewModel.SetSharingObject(button.DataContext as BlagueVM);
             Windows.ApplicationModel.DataTransfer.DataTransferManager.ShowShareUI();
         }
     }

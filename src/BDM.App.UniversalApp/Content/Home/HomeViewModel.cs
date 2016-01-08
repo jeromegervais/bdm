@@ -1,6 +1,7 @@
 ﻿using BDM.App.UniversalApp.Mvvm.ViewModel;
 using BDM.App.UniversalApp.Utils;
 using BDM.App.UniversalApp.Utils.Navigation;
+using BDM.App.UniversalApp.ViewModels;
 using BDM.Common.Model;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace BDM.App.UniversalApp.Content.Home
                 _order = order.Value;
             }
             Blagues.Clear();
-            foreach (Blague blague in _blaguesHelper.GetBlagues(_order))
+            foreach (BlagueVM blague in _blaguesHelper.GetBlagues(_order))
             {
                 Blagues.Add(blague);
             }

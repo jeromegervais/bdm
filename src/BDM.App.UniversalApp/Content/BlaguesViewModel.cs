@@ -1,7 +1,7 @@
 ﻿using BDM.App.UniversalApp.Mvvm.ViewModel;
 using BDM.App.UniversalApp.Utils;
 using BDM.App.UniversalApp.Utils.Navigation;
-using BDM.Common.Model;
+using BDM.App.UniversalApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,13 +20,20 @@ namespace BDM.App.UniversalApp.Content
 
         protected override bool _hasSharing => true;
 
-        public ObservableCollection<Blague> Blagues { get; set; } = new ObservableCollection<Blague>();
+        public ObservableCollection<BlagueVM> Blagues { get; set; } = new ObservableCollection<BlagueVM>();
 
         public BlaguesViewModel(BlaguesHelper blaguesHelper)
         {
             _blaguesHelper = blaguesHelper;
+
+            Blagues.CollectionChanged += Blagues_CollectionChanged;
         }
-        
+
+        private void Blagues_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            //e.OldItems 
+        }
+
         protected async Task CheckBlaguesHelper()
         {
             if (!_blaguesHelper.HasBeenLoaded)
@@ -35,15 +42,20 @@ namespace BDM.App.UniversalApp.Content
 
         public abstract Task ReloadBlagues();
 
-        public async void Vote(Blague blague, bool like)
+        public async void Vote(BlagueVM blague, bool like)
         {
             bool vote = await _blaguesHelper.Vote(blague.Id, like);
             string message = vote ? string.Format("Tu {0} aimé cette blague", like ? "as" : "n'as pas") : "Tu as déjà voté pour cette blague.";
 
+            if (vote)
+            {
+                if (like) { blague.NbGoods++; }
+                else { blague.NbBads++; }
+            }
             await App.Current.GetShell().ShowNotificationAsync(message);
         }
 
-        public void SetSharingObject(Blague blague)
+        public void SetSharingObject(BlagueVM blague)
         {
             if (blague != null)
             {
