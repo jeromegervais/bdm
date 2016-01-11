@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.ViewManagement;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using BDM.App.UniversalApp.Content.Home;
@@ -37,8 +38,9 @@ namespace BDM.App.UniversalApp.Content
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 			if (ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
 			{
-				//BackButton.Visibility = Visibility.Collapsed;
-			}
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                statusBar.HideAsync();
+            }
 
 			MenuItems = new List<NavigationMenuItem>
 			{
@@ -71,9 +73,15 @@ namespace BDM.App.UniversalApp.Content
 
 		private void OnBackRequested(object sender, BackRequestedEventArgs e)
 		{
-			if (NavigationFrame.CanGoBack)
+            e.Handled = true;
+            if (NavigationFrame.CanGoBack)
 				NavigationFrame.GoBack();
-		}
+            else if (NavigationFrame.Content is HomePage)
+                Application.Current.Exit();
+            else
+                Navigate(typeof(HomePage));
+            
+        }
 
 		private void OnMenuItemClicked(object sender, RoutedEventArgs e)
 		{

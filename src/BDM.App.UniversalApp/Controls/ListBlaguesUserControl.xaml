@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
+    
     <ListView ItemsSource="{Binding Blagues}"
                   HorizontalContentAlignment="Stretch">
         <ListView.ItemTemplate>
@@ -26,61 +26,67 @@
                                        HorizontalAlignment="Stretch"/>
                     </Border>
                     <Grid Grid.Row="1"
-                              Background="{StaticResource BDM_Blue}"
-                              Padding="6">
+                              Background="{StaticResource BDM_Blue}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Button Style="{StaticResource ButtonNoStyle}"
-                                    Grid.Column="0"
-                                    Click="Vote_Click"
-                                    DataContext="{Binding}"
-                                    CommandParameter="Like"
-                                    HorizontalAlignment="Stretch">
+                        <Button Style="{StaticResource ButtonWithClickStyle}"
+                                Foreground="White"
+                                Grid.Column="0"
+                                Click="Vote_Click"
+                                DataContext="{Binding}"
+                                CommandParameter="Like"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{StaticResource BDM_Blue}"
+                                HorizontalAlignment="Stretch"
+                                Padding="6">
                             <RelativePanel HorizontalAlignment="Center">
                                 <FontIcon x:Name="IconGoods"
                                               Glyph="&#xE8E1;"
                                               FontFamily="Segoe MDL2 Assets"
-                                              Foreground="White"
                                               Margin="4,0,16,0" />
                                 <TextBlock Text="{Binding NbGoods}"
-                                               Foreground="White"
                                                RelativePanel.RightOf="IconGoods" />
                             </RelativePanel>
                         </Button>
 
-                        <Button Style="{StaticResource ButtonNoStyle}"
-                                    Grid.Column="1"
-                                    Click="Vote_Click"
-                                    DataContext="{Binding}"
-                                    CommandParameter="Dislike"
-                                    HorizontalAlignment="Stretch">
+                        <Button Style="{StaticResource ButtonWithClickStyle}"
+                                Foreground="White"
+                                Grid.Column="1"
+                                Click="Vote_Click"
+                                DataContext="{Binding}"
+                                CommandParameter="Dislike"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{StaticResource BDM_Blue}"
+                                HorizontalAlignment="Stretch"
+                                Padding="6">
                             <RelativePanel HorizontalAlignment="Center">
                                 <FontIcon x:Name="IconBads"
                                               Glyph="&#xE8E0;"
                                               FontFamily="Segoe MDL2 Assets"
-                                              Foreground="White"
                                               Margin="4,0,16,0" />
                                 <TextBlock Text="{Binding NbBads}"
-                                               Foreground="White"
                                                RelativePanel.RightOf="IconBads" />
                             </RelativePanel>
                         </Button>
 
-                        <Button Style="{StaticResource ButtonNoStyle}"
-                                    Grid.Column="2"
-                                    Click="Share_Click"
-                                    DataContext="{Binding}"
-                                    CommandParameter="Dislike"
-                                    HorizontalAlignment="Stretch">
+                        <Button Style="{StaticResource ButtonWithClickStyle}"
+                                Foreground="White"
+                                Grid.Column="2"
+                                Click="Share_Click"
+                                DataContext="{Binding}"
+                                CommandParameter="Dislike"
+                                HorizontalContentAlignment="Stretch"
+                                Background="{StaticResource BDM_Blue}"
+                                HorizontalAlignment="Stretch"
+                                Padding="6">
                             <RelativePanel Grid.Column="2"
                                                HorizontalAlignment="Center">
                                 <FontIcon x:Name="IconShare"
                                               Glyph="&#xE72D;"
                                               FontFamily="Segoe MDL2 Assets"
-                                              Foreground="White"
                                               Margin="4,0,16,0" />
                             </RelativePanel>
                         </Button>

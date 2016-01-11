@@ -25,13 +25,6 @@ namespace BDM.App.UniversalApp.Content
         public BlaguesViewModel(BlaguesHelper blaguesHelper)
         {
             _blaguesHelper = blaguesHelper;
-
-            Blagues.CollectionChanged += Blagues_CollectionChanged;
-        }
-
-        private void Blagues_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            //e.OldItems 
         }
 
         protected async Task CheckBlaguesHelper()
