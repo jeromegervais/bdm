@@ -108,6 +108,7 @@ namespace BDM.App.UniversalApp.Content
 
         public void Navigate(Type destination, object parameter)
         {
+            RootSplitView.IsPaneOpen = false;
             if (parameter != null)
             {
                 //serialisation de la data avant nav

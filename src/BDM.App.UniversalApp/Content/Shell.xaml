@@ -28,7 +28,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="RootSplitView.DisplayMode"
-                                Value="CompactOverlay" />
+                                Value="Overlay" />
                         <Setter Target="RootSplitView.IsPaneOpen"
                                 Value="False" />
                     </VisualState.Setters>
@@ -36,32 +36,38 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal"
+                    Background="{StaticResource BDM_Blue}">
+            <Button x:Name="HeaderButton"
+                    Style="{StaticResource ButtonWithClickStyle}"
+                    Click="OnHeaderClicked"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignRightWithPanel="True"
+                    Background="Transparent"
+                    Foreground="White"
+                    Padding="8,6">
+                <FontIcon Glyph="&#xE700;"
+                          FontFamily="Segoe MDL2 Assets"
+                          Margin="4,0,8,0" />
+            </Button>
+        </StackPanel>
+        
         <SplitView x:Name="RootSplitView"
+                   Grid.Row="1"
                    DisplayMode="Inline"
                    OpenPaneLength="250"
                    IsTabStop="False">
             <SplitView.Pane>
-                <RelativePanel Background="White">
-                    <Button x:Name="HeaderButton"
-                            Style="{StaticResource ButtonWithClickStyle}"
-                            Click="OnHeaderClicked"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            RelativePanel.AlignRightWithPanel="True"
-                            Background="{StaticResource BDM_Blue}"
-                            Foreground="White"
-                            Padding="8,6">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE700;"
-                                      FontFamily="Segoe MDL2 Assets"
-                                      Margin="4,0,16,0" />
-                            <TextBlock Text="Blagues de Merde" />
-                        </StackPanel>
-                    </Button>
+                <RelativePanel Background="{StaticResource BDM_Blue}">
                     <ItemsControl x:Name="MenuItemsList"
                                   ItemsSource="{x:Bind Path=MenuItems}"
-                                  RelativePanel.Below="HeaderButton"
                                   RelativePanel.AlignLeftWithPanel="True"
                                   RelativePanel.AlignRightWithPanel="True"
                                   Background="{StaticResource BDM_Blue}">
@@ -72,8 +78,9 @@
                                         HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="Left"
                                         Foreground="White"
-                                        Background="{StaticResource BDM_Blue}"
-                                        Padding="6">
+                                        Background="Transparent"
+                                        Padding="6"
+                                        Margin="0,0,0,12">
                                     <Button.Content>
                                         <RelativePanel>
                                             <FontIcon x:Name="Icon"
@@ -94,7 +101,8 @@
             <Frame x:Name="NavigationFrame" />
         </SplitView>
 
-        <ItemsControl x:Name="ToastContainer">
+        <ItemsControl x:Name="ToastContainer"
+                      Grid.RowSpan="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <notifications:UINotificationUserControl />
