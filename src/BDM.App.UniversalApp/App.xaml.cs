@@ -27,6 +27,7 @@ namespace BDM.App.UniversalApp
 			InjectionHelper.RegisterContainer(_container);
 			Suspending += OnSuspending;
 			Resuming += OnResuming;
+            UnhandledException += OnUnhandledException;
 
             LogManager.AssemblyName = typeof(Application).GetTypeInfo().Assembly.FullName;
             Logger = LogManager.CreateLogglyLogger("1eeac402-998a-46ee-b87f-7781c6ee92b6");
@@ -64,5 +65,10 @@ namespace BDM.App.UniversalApp
 		{
 			Shell.OnResuming();
 		}
-	}
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.Fatal(e.Exception);
+        }
+    }
 }
