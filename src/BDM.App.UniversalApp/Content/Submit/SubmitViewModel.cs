@@ -23,8 +23,7 @@ namespace BDM.App.UniversalApp.Content.Submit
 
         public async Task<bool> Submit()
         {
-            //_blaguesService.
-            return await Task.FromResult(true);
+            return await _blaguesService.Submit(Blague, Pseudo, Email);
         }
     }
 }

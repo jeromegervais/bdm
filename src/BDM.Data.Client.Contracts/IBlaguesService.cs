@@ -16,5 +16,7 @@ namespace BDM.Data.Client.Contracts
         Task<Dictionary<Order, List<Blague>>> GetBlaguesForCategory(int categoryId);
 
         Task<bool> Vote(int blagueId, bool like);
+
+        Task<bool> Submit(string blague, string pseudo, string email);
     }
 }

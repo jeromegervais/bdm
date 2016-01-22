@@ -41,5 +41,11 @@ namespace BDM.Data.Client.Tests
         {
             var popoy = _blaguesService.Vote(429351, true).Result;
         }
+
+        [TestMethod]
+        public void TestWeCanSubmitABlague()
+        {
+            var popoy = _blaguesService.Submit("une autre blague de test", "test", null).Result;
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace BDM.Data.Client.Net.WebServices
 
         private const string _baseVoteUrl = "http://webservices.blaguesdemerde.fr/windows10/";
 
+        private const string _baseSubmitUrl = "http://webservices.blaguesdemerde.fr/";
+
         public BlaguesService(IAccessIsolatedStorage isolatedStorage)
         {
             _client = new RestClient(isolatedStorage);
@@ -71,7 +73,14 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<bool> Vote(int blagueId, bool like)
         {
             var request = new VoteRequest(blagueId, like);
-            await _client.SendDataAsync<VoteRequest, VoteResponse>(_baseVoteUrl, request.Command, request, RestClient.DefaultCacheLifetime);
+            await _client.SendDataAsync<VoteRequest, BaseResponse>(_baseVoteUrl, request.Command, request, RestClient.DefaultCacheLifetime);
+            return true;
+        }
+
+        public async Task<bool> Submit(string blague, string pseudo, string email)
+        {
+            var request = new SubmitRequest(blague, pseudo, email);
+            await _client.SendDataAsync<SubmitRequest, BaseResponse>(_baseSubmitUrl, request.Command, request, RestClient.DefaultCacheLifetime);
             return true;
         }
     }

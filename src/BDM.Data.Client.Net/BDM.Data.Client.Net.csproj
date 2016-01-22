@@ -14,7 +14,8 @@
     <DefaultLanguage>fr-FR</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -52,8 +53,8 @@
     <Compile Include="WebServicesData\GetBlaguesResponseData.cs" />
     <Compile Include="WebServicesData\GetCategoriesRequest.cs" />
     <Compile Include="WebServicesData\GetCategoriesResponse.cs" />
+    <Compile Include="WebServicesData\SubmitRequest.cs" />
     <Compile Include="WebServicesData\VoteRequest.cs" />
-    <Compile Include="WebServicesData\VoteResponse.cs" />
     <Compile Include="WebServices\BlaguesService.cs" />
   </ItemGroup>
   <ItemGroup>
