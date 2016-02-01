@@ -18,5 +18,7 @@ namespace BDM.Data.Client.Contracts
         Task<bool> Vote(int blagueId, bool like);
 
         Task<bool> Submit(string blague, string pseudo, string email);
+
+        Task<List<Blague>> Search(string searchWord);
     }
 }

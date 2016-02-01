@@ -11,9 +11,9 @@ namespace BDM.Data.Client.Net.WebServices
     public class BlaguesService : IBlaguesService
     {
         private readonly RestClient _client;
-        private const string _baseUrl = "http://ws.blaguesdemerde.fr/v1";
+        private const string _defaultBaseUrl = "http://ws.blaguesdemerde.fr/v1";
 
-        private const string _baseVoteUrl = "http://webservices.blaguesdemerde.fr/windows10/";
+        private const string _baseWindows10Url = "http://webservices.blaguesdemerde.fr/windows10/";
 
         private const string _baseSubmitUrl = "http://webservices.blaguesdemerde.fr/";
 
@@ -25,7 +25,7 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<Dictionary<Order, List<Blague>>> GetBlagues()
         {
             var request = new GetBlaguesRequest();
-            var resp = await _client.SendDataAsync<GetBlaguesRequest, GetBlaguesResponse>(_baseUrl, request.Command, request, RestClient.NoCache, CachePolicy.CanUseOldValues);
+            var resp = await _client.SendDataAsync<GetBlaguesRequest, GetBlaguesResponse>(_defaultBaseUrl, request.Command, request, RestClient.NoCache, CachePolicy.CanUseOldValues);
 
             var dicoBlagues = new Dictionary<Order, List<Blague>>();
 
@@ -43,7 +43,7 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<List<Category>> GetCategories()
         {
             var request = new GetCategoriesRequest();
-            var resp = await _client.SendDataAsync<GetCategoriesRequest, GetCategoriesResponse>(_baseUrl, request.Command, request, RestClient.DefaultCacheLifetime, CachePolicy.CanUseOldValues);
+            var resp = await _client.SendDataAsync<GetCategoriesRequest, GetCategoriesResponse>(_defaultBaseUrl, request.Command, request, RestClient.DefaultCacheLifetime, CachePolicy.CanUseOldValues);
 
             if (resp?.Response?.Meta?.Code == 200 && resp?.Response?.Data != null)
             {
@@ -55,7 +55,7 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<Dictionary<Order, List<Blague>>> GetBlaguesForCategory(int categoryId)
         {
             var request = new GetBlaguesForCategoryRequest(categoryId);
-            var resp = await _client.SendDataAsync<GetBlaguesForCategoryRequest, GetBlaguesForCategoryResponse>(_baseUrl, request.Command, request, RestClient.NoCache, CachePolicy.CanUseOldValues);
+            var resp = await _client.SendDataAsync<GetBlaguesForCategoryRequest, GetBlaguesForCategoryResponse>(_defaultBaseUrl, request.Command, request, RestClient.NoCache, CachePolicy.CanUseOldValues);
 
             var dicoBlagues = new Dictionary<Order, List<Blague>>();
 
@@ -73,7 +73,7 @@ namespace BDM.Data.Client.Net.WebServices
         public async Task<bool> Vote(int blagueId, bool like)
         {
             var request = new VoteRequest(blagueId, like);
-            await _client.SendDataAsync<VoteRequest, BaseResponse>(_baseVoteUrl, request.Command, request, RestClient.DefaultCacheLifetime);
+            await _client.SendDataAsync<VoteRequest, BaseResponse>(_baseWindows10Url, request.Command, request, RestClient.DefaultCacheLifetime);
             return true;
         }
 
@@ -82,6 +82,17 @@ namespace BDM.Data.Client.Net.WebServices
             var request = new SubmitRequest(blague, pseudo, email);
             await _client.SendDataAsync<SubmitRequest, BaseResponse>(_baseSubmitUrl, request.Command, request, RestClient.DefaultCacheLifetime);
             return true;
+        }
+
+        public async Task<List<Blague>> Search(string searchWord)
+        {
+            var request = new SearchRequest(searchWord);
+            var resp = await _client.SendDataAsync<SearchRequest, SearchResponse>(_baseWindows10Url, request.Command, request, RestClient.DefaultCacheLifetime);
+            if (resp?.Response?.Blagues != null)
+            {
+                return resp.Response.Blagues;
+            }
+            return new List<Blague>();
         }
     }
 }

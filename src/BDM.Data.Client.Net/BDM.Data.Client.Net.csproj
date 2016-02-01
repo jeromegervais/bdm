@@ -53,6 +53,8 @@
     <Compile Include="WebServicesData\GetBlaguesResponseData.cs" />
     <Compile Include="WebServicesData\GetCategoriesRequest.cs" />
     <Compile Include="WebServicesData\GetCategoriesResponse.cs" />
+    <Compile Include="WebServicesData\SearchRequest.cs" />
+    <Compile Include="WebServicesData\SearchResponse.cs" />
     <Compile Include="WebServicesData\SubmitRequest.cs" />
     <Compile Include="WebServicesData\VoteRequest.cs" />
     <Compile Include="WebServices\BlaguesService.cs" />

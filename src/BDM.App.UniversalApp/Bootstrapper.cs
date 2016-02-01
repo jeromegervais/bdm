@@ -8,6 +8,7 @@ using BDM.Data.Client.Net.WebServices;
 using BDM.App.UniversalApp.Utils;
 using BDM.App.UniversalApp.Content.Categories;
 using BDM.App.UniversalApp.Content.Submit;
+using BDM.App.UniversalApp.Content.Search;
 
 namespace BDM.App.UniversalApp
 {
@@ -35,6 +36,7 @@ namespace BDM.App.UniversalApp
             builder.RegisterType<CategoryPageViewModel>().SingleInstance();
             builder.RegisterType<CategoriesViewModel>().SingleInstance();
             builder.RegisterType<SubmitViewModel>().SingleInstance();
+            builder.RegisterType<SearchViewModel>().SingleInstance();
 
             #endregion
         }

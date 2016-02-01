@@ -115,6 +115,10 @@
       <DependentUpon>Categories.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\Categories\CategoriesViewModel.cs" />
+    <Compile Include="Content\Search\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\Search\SearchViewModel.cs" />
     <Compile Include="Content\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
@@ -226,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Content\Categories\Categories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Content\Search\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

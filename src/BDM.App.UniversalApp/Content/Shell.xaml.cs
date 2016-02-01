@@ -17,6 +17,7 @@ using BDM.App.UniversalApp.Utils.Navigation;
 using BDM.Common.Model;
 using BDM.App.UniversalApp.Content.Categories;
 using BDM.App.UniversalApp.Content.Submit;
+using BDM.App.UniversalApp.Content.Search;
 
 namespace BDM.App.UniversalApp.Content
 {
@@ -49,6 +50,7 @@ namespace BDM.App.UniversalApp.Content
 				new NavigationMenuItem {Destination = typeof (HomePage), Label = "Meilleures", Order = Order.TopWeek, Icon = '\xE8E1'},
                 new NavigationMenuItem {Destination = typeof (CategoriesPage), Label = "Catégories", Icon = '\xEA37'},
                 new NavigationMenuItem {Destination = typeof (SubmitPage), Label = "Soumettre", Icon = '\xE70F'},
+                new NavigationMenuItem {Destination = typeof (SearchPage), Label = "Rechercher", Icon = '\xE11A'},
             };
 
             Messenger.Current.Subscribe<UINotificationMessage>(OnSendNotificationMessage);

@@ -40,12 +40,20 @@ namespace BDM.Data.Client.Tests
         public void TestWeCanVoteForABlague()
         {
             var popoy = _blaguesService.Vote(429351, true).Result;
+            Assert.IsTrue(popoy);
         }
 
         [TestMethod]
         public void TestWeCanSubmitABlague()
         {
             var popoy = _blaguesService.Submit("une autre blague de test", "test", null).Result;
+        }
+
+        [TestMethod]
+        public void TestWeCanSarchBlagues()
+        {
+            var popoy = _blaguesService.Search("norris").Result;
+            Assert.IsTrue(popoy.Count > 0);
         }
     }
 }
