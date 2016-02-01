@@ -22,10 +22,7 @@ namespace BDM.Data.Client.Net.WebServicesData
             _email = email;
         }
 
-        public override string Command
-        {
-            get { return "post?source=8"; }
-        }
+        public override string Command => "post?source=8";
 
         public override IEnumerable<KeyValuePair<string, string>> Parameters
         {

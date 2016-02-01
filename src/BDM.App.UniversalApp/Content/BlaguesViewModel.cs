@@ -33,8 +33,6 @@ namespace BDM.App.UniversalApp.Content
                 await _blaguesHelper.LoadBlagues();
         }
 
-        public abstract Task ReloadBlagues();
-
         public async void Vote(BlagueVM blague, bool like)
         {
             bool vote = await _blaguesHelper.Vote(blague.Id, like);

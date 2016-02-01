@@ -29,6 +29,16 @@ namespace BDM.App.UniversalApp.Content.Categories
             await ViewModel.OnNavigatedTo(e);
         }
 
+        protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            await ViewModel.OnNavigatingFrom(e);
+        }
+
+        protected override async void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            await ViewModel.OnNavigatedFrom(e);
+        }
+
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Category category = (sender as Border)?.DataContext as Category;

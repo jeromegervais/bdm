@@ -20,6 +20,7 @@ namespace BDM.App.UniversalApp.Content.Search
         public override async Task OnNavigatedFrom(NavigationEventArgs e)
         {
             SearchWord = string.Empty;
+            Blagues.Clear();
             await base.OnNavigatedFrom(e);
         }
 
@@ -35,11 +36,6 @@ namespace BDM.App.UniversalApp.Content.Search
             {
                 Blagues.Add(blague);
             }
-        }
-
-        public override async Task ReloadBlagues()
-        {
-            // en fait il n'y a rien a faire...
         }
     }
 }

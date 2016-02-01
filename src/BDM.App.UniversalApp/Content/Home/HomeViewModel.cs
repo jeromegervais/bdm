@@ -56,7 +56,7 @@ namespace BDM.App.UniversalApp.Content.Home
             RaisePropertyChanged(() => OrderName);
         }
 
-        public override async Task ReloadBlagues()
+        public async Task ReloadBlagues()
         {
             await _blaguesHelper.LoadBlagues();
             SetFromOrder();

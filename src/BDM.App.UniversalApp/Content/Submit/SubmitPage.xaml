@@ -72,7 +72,7 @@
                 Margin="12"
                 Click="Button_Click">
             <Border Background="{StaticResource BDM_Blue}"
-                    Padding="12"
+                    Padding="6"
                     HorizontalAlignment="Stretch">
                 <TextBlock Text="Fais péter"
                            Foreground="White"

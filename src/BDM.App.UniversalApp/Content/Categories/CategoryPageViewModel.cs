@@ -53,7 +53,7 @@ namespace BDM.App.UniversalApp.Content.Categories
             RaisePropertyChanged(() => CategoryName);
         }
 
-        public override async Task ReloadBlagues()
+        public async Task ReloadBlagues()
         {
             await _blaguesHelper.LoadBlagues();
             SetFromCategory();
